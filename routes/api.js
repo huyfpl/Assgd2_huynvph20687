@@ -6,7 +6,7 @@ var express = require('express');
 var jwt = require('jsonwebtoken');
 var router = express.Router();
 var User = require("../models/user");
-var Book = require("../models/book");
+var quanao = require("../models/quanao");
 
 const bodyParser = require("body-parser");
 
@@ -22,7 +22,7 @@ router.use(parser);
 // Create new user
 router.post('/signup', async function (req, res) {
     if (!req.body.username || !req.body.password) {
-        res.json({ success: false, msg: 'Please pass username and password.' });
+        return res.render('api/signup',{ success: false, msg: 'nhập đầy đủ nhé bạn!' });
     } else {
         var newUser = new User({
             username: req.body.username,
@@ -52,7 +52,7 @@ router.post("/signin", async function (req, res) {
     if (!user) {
         res
             .status(401)
-            .send({ success: false, msg: "Authentication failed. User not found." });
+            .render('signin',{ success: false, msg: "Tên người dùng ko tồn tại nha!" });
     } else {
         // check if password matches
         user.comparePassword(req.body.password, function (err, isMatch) {
@@ -65,9 +65,9 @@ router.post("/signin", async function (req, res) {
             } else {
                 res
                     .status(401)
-                    .send({
+                    .render('signin',{
                         success: false,
-                        msg: "Authentication failed. Wrong password.",
+                        msg: "Hình như sai pass r bạn ơi!",
                     });
             }
         });
@@ -78,34 +78,34 @@ router.get('/signin', (req, res) => {
     });
 });
 
-// Get List Book
-router.get('/book', passport.authenticate('jwt', { session: false }), async function (req, res) {
+// Get List quanao
+router.get('/quanao', passport.authenticate('jwt', { session: false }), async function (req, res) {
     var token = getToken(req.headers);
     if (token) {
-        let books = await Book.find();
+        let quanaos = await quanao.find();
 
-        return res.json(books);
+        return res.json(quanaos);
     } else {
         return res.status(403).send({ success: false, msg: 'Unauthorized.' });
     }
 });
 
 
-router.post("/book", passport.authenticate("jwt", { session: false }), function (req, res) {
+router.post("/quanao", passport.authenticate("jwt", { session: false }), function (req, res) {
     var token = getToken(req.headers);
     if (token) {
         console.log(req.body);
-        var newBook = new Book({
-            isbn: req.body.isbn,
-            title: req.body.title,
-            author: req.body.author,
-            publisher: req.body.publisher,
+        var newquanao = new quanao({
+            tenquanao: req.body.tenquanao,
+            soluong: req.body.soluong,
+            price: req.body.price,
+            image: req.body.image,
         });
 
-        newBook
+        newquanao
             .save()
-            .then(() => res.redirect("/book"))
-            .catch((err) => res.json({ success: false, msg: "Save book failed." }));
+            .then(() => res.redirect("/quanao"))
+            .catch((err) => res.json({ success: false, msg: "Save quanao failed." }));
     } else {
         return res.status(403).send({ success: false, msg: "Unauthorized." });
     }

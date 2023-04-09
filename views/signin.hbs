@@ -1,14 +1,20 @@
 {{> header}}
 
-<form method="post" action="/api/signin">
-  <h2>Login</h2>
+<form method="post" action="/api/signin" style="text-align: center;" class="p-3 mb-2 bg-info text-dark">
+  <h2>Đăng nhập</h2>
+  {{#if msg}}
+  <div class="p-1 mb-2  ">
+    <p class="fw-bold  mb-0 fs-7 text-danger">{{msg}}</p>
+  </div>
+  {{/if}}
   <label for="username">username</label>
-  <input type="text" class="form-control" name="username" id="username" required>
+  <input type="text"  class="form-control border border-primary border-2" name="username" id="username" required >
   <div class="username error"></div>
   <label for="password">Password</label>
-  <input type="password" name="password"  />
+  <input type="password" name="password" class="form-control border border-primary border-2"/>
   <div class="password error"></div>
-  <button type="submit" >login</button>
+ <button type="submit" class="btn btn-warning font-weight-bold" style="font-weight: bold;">Đăng nhập</button>
+
 </form>
 
 {{>footer}}

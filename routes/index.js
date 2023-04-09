@@ -9,7 +9,7 @@ var jwt = require('jsonwebtoken');
 var config = require('../config/database');
 const user = require("../models/user");
 
-router.get("/book", (req, res, next) => {
+router.get("/quanao", (req, res, next) => {
   const token = req.cookies.jwt;
   console.log(`jwt ${token}`);
   console.log("huy token:" + token)
@@ -32,12 +32,12 @@ router.get("/book", (req, res, next) => {
   const token = req.cookies.jwt;
 
   try {
-    const response = await axios.get("http://localhost:3000/api/book", {
+    const response = await axios.get("http://localhost:3000/api/quanao", {
       headers: { Authorization: `jwt ${token}` },
     });
     const data = response.data;
-    res.render("book", {
-      Title: "Book",
+    res.render("quanao", {
+      Title: "quanao",
       data: data,
     });
   } catch (error) {
@@ -52,6 +52,7 @@ router.get('/add', async function (req, res) {
 })
 router.get("/", function (req, res, next) {
   const token = req.cookies.jwt;
+  console.log("huy token",token)
   if (token) {
     jwt.verify(token, config.secret, async (err, decodedToken) => {
       if (err) {
@@ -75,6 +76,7 @@ router.get("/", function (req, res, next) {
     });
   } else {
     res.locals.user = null;
+    
     next();
   }
 });

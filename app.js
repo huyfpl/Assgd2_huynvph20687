@@ -13,7 +13,7 @@ var indexRouter = require('./routes/index');
 
 
 app.use('/', indexRouter);
-
+app.get('/', indexRouter, (req, res) => res.render('home'));
 app.use(cookieParser());
 
 app.use('/api', apiRouter);

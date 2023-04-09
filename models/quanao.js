@@ -1,23 +1,23 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
-var BookSchema = new Schema({
-  isbn: {
+var quanaoSchema = new Schema({
+  tenquanao: {
     type: String,
     required: true
   },
-  title: {
+  soluong: {
     type: String,
     required: true
   },
-  author: {
+  price: {
     type: String,
     required: true
   },
-  publisher: {
+  image: {
     type: String,
     required: true
   }
 });
 
-module.exports = mongoose.model('Book', BookSchema);
+module.exports = mongoose.model('quanao', quanaoSchema);
