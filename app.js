@@ -10,8 +10,6 @@ var app = express();
 const cookieParser = require("cookie-parser");
 var apiRouter = require('./routes/api');
 var indexRouter = require('./routes/index');
-
-
 app.use('/', indexRouter);
 app.get('/', indexRouter, (req, res) => res.render('home'));
 app.use(cookieParser());
@@ -50,6 +48,7 @@ app.use(function(req, res, next) {
   console.log('404 - Khong tim thay trang')
   next();
 });
+
 
 module.exports = app;
 

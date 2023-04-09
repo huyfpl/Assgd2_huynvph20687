@@ -5,29 +5,29 @@
             <form>
                 <div class="mb-3 form-group">
                     <label for="tenquanao" class="fw-bold">Tên Quần Áo</label>
-                    <input type="text" class="form-control" name="tenquanao" id="tenquanao" required>
+                    <input type="text" class="form-control" name="tenquanao" id="tenquanao" required
+                        value="{{tenquanao}}">
                 </div>
                 <div class="mb-3 form-group">
                     <label for="soluong" class="fw-bold">Số Lượng</label>
-                    <input type="text" class="form-control" name="soluong" id="soluong" required>
+                    <input type="text" class="form-control" name="soluong" id="soluong" required value="{{soluong}}">
                 </div>
-                <div class="mb-3 form-group" >
+                <div class="mb-3 form-group">
                     <label for="price" class="fw-bold">Giá</label>
-                    <input type="number" class="form-control" name="price" id="price" required>
+                    <input type="number" class="form-control" name="price" id="price" required value="{{price}}">
                 </div>
                 <div class="mb-3 form-group">
                     <label for="image" class="fw-bold">Link Hình Ảnh</label>
-                    <input type="text" class="form-control" name="image" id="image" required>
+                    <input type="text" class="form-control" name="image" id="image" required value="{{image}}">
                 </div>
-                <button class="btn btn-info w-100" onclick="Save(event)">Thêm</button>
+                <button class="btn btn-info w-100" onclick="Update(event)">Sửa</button>
             </form>
         </div>
     </div>
 </div>
 
-
 <script>
-    function Save(event) {
+   function Update(event) {
     event.preventDefault();
     const tenquanao = document.getElementById("tenquanao").value;
     const soluong = document.getElementById('soluong').value;
@@ -54,6 +54,5 @@
         })
         .catch(err => console.error(err));
 }
-
 
 </script>

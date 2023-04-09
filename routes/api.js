@@ -21,10 +21,12 @@ router.use(parser);
 
 // Create new user
 router.post('/signup', async function (req, res) {
-    if (!req.body.username || !req.body.password) {
+    if (!req.body.hovaten ||!req.body.anhdaidien ||!req.body.username || !req.body.password) {
         return res.render('api/signup',{ success: false, msg: 'nhập đầy đủ nhé bạn!' });
     } else {
         var newUser = new User({
+            hovaten: req.body.hovaten,
+            anhdaidien: req.body.anhdaidien,
             username: req.body.username,
             password: req.body.password
         });
@@ -102,7 +104,26 @@ router.get('/search_quanao', passport.authenticate('jwt', { session: false }), a
         return res.status(403).send({ success: false, msg: 'Unauthorized.' });
     }
 });
+// xóa quần áo 
+router.get('/xoa_quanao/:id', passport.authenticate('jwt', { session: false }), async function (req, res) {
+    var token = getToken(req.headers);
+    console.log("chạy xóa qua đây")
+    if (token) {
+        try {
+            let quanaos = await quanao.findByIdAndDelete(req.params.id);
+            res.redirect("http://localhost:3000/quanao")
+            // return res.json(quanaos);
+            console.log("chạy xóa qua đây nữa")
 
+           
+        } catch (error) {
+            console.log(error);
+            res.status(500).json({ error: 'Server error' });
+        }
+    } else {
+        return res.status(403).send({ success: false, msg: 'Unauthorized.' });
+    }
+});
 
 router.post("/quanao", passport.authenticate("jwt", { session: false }), function (req, res) {
     var token = getToken(req.headers);

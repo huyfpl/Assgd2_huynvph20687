@@ -8,7 +8,7 @@ router.use(cookieParser());
 var jwt = require('jsonwebtoken');
 var config = require('../config/database');
 const user = require("../models/user");
-
+var quanao = require("../models/quanao");
 router.get("/quanao", (req, res, next) => {
   const token = req.cookies.jwt;
   console.log(`jwt ${token}`);
@@ -48,7 +48,7 @@ router.get("/quanao", (req, res, next) => {
 
 router.get('/add', async function (req, res) {
   const token = req.cookies.jwt;
-  res.render("add", { Title: "Add", token })
+  res.render("add", { Title: "Thêm Quần Áo", token })
 })
 router.get('/timquanao', async function (req, res) {
   const token = req.cookies.jwt;
@@ -60,20 +60,33 @@ router.get('/timquanao', async function (req, res) {
     });
     const data = response.data;
     res.render("quanao", {
-      Title: "quanao",
+      Title: "Tìm quần áo",
       data: data,
     });
   } catch (error) {
     console.log(error);
   }
 });
-
-
-
+router.get('/xoaquanao/:id', async function (req, res) {
+  const token = req.cookies.jwt;
+  const quanaoId = req.params.id;
+  console.log("lỗi xóa", quanaoId)
+  try {
+    const response = await axios.get(`http://localhost:3000/api/xoa_quanao/${quanaoId}`, {
+      headers: { Authorization: `jwt ${token}` },
+    });
+    console.log(" xóa data");
+    const data = response.data;
+    console.log(" xóa data",data);
+    res.redirect("/quanao");
+  } catch (error) {
+    console.log("lỗi xóa huy", error);
+  }
+});
 
 router.get("/", function (req, res, next) {
   const token = req.cookies.jwt;
-  console.log("huy token",token)
+  console.log("huy token", token)
   if (token) {
     jwt.verify(token, config.secret, async (err, decodedToken) => {
       if (err) {
@@ -83,21 +96,21 @@ router.get("/", function (req, res, next) {
       } else {
         console.log("decodedToken:", decodedToken);
         let userObj = await user.findById(decodedToken._id);
-        
+
         res.locals.user = userObj;
-        const userName = userObj.username;
-        console.log("huy 17",userName)
+        const userName = userObj.hovaten;
+        console.log("huy 17", userName)
         console.log("user: " + userObj);
         res.render("home", {
           layout: "main",
           user: userName,
-          
+
         });
       }
     });
   } else {
     res.locals.user = null;
-    
+
     next();
   }
 });
