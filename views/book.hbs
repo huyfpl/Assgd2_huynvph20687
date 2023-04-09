@@ -1,0 +1,21 @@
+<div class="container-fluid">
+    <a href="/add" class="btn btn-success w-100">Thêm sách</a>
+    
+    <table class="table table-hover">
+        <thead>
+            <th>Tiêu đề</th>
+            <th>Tác giả</th>
+            <th>Nhà xuất bản</th>
+        </thead>
+        <tbody>
+            {{#each data}}
+            <tr>
+                <td>{{this.title}}</td>
+                <td>{{this.author}}</td>
+                <td>{{this.publisher}}</td>
+            </tr>
+            {{/each}}
+    
+        </tbody>
+    </table>
+</div>

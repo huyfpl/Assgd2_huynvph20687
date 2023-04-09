@@ -1,0 +1,14 @@
+{{> header}}
+
+<form method="post" action="/api/signin">
+  <h2>Login</h2>
+  <label for="username">username</label>
+  <input type="text" class="form-control" name="username" id="username" required>
+  <div class="username error"></div>
+  <label for="password">Password</label>
+  <input type="password" name="password"  />
+  <div class="password error"></div>
+  <button type="submit" >login</button>
+</form>
+
+{{>footer}}

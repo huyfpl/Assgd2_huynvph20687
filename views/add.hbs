@@ -1,0 +1,54 @@
+<div class="container-fluid">
+    <a href="/book" class="btn btn-danger m-3">Back</a>
+    <div class="contaier">
+        <form>
+            <div class="mb-3 form-group">
+                <label for="isbn">isBn:</label>
+                <input type="text" class="form-control" name="isbn" id="isbn" required>
+            </div>
+            <div class="mb-3 form-group">
+                <label for="title">Tiêu đề:</label>
+                <input type="text" class="form-control" name="title" id="title" required>
+            </div>
+            <div class="mb-3 form-group">
+                <label for="author">Tác giả:</label>
+                <input type="text" class="form-control" name="author" id="author" required>
+            </div>
+            <div class="mb-3 form-group">
+                <label for="publisher">Nhà xuất bản:</label>
+                <input type="text" class="form-control" name="publisher" id="publisher" required>
+            </div>
+            <button class="btn btn-success w-100" onclick="Save(event)">Thêm</button>
+        </form>
+    </div>
+</div>
+
+<script>
+    function Save(event) {
+        event.preventDefault();
+        const isbn = document.getElementById("isbn").value;
+        const title = document.getElementById('title').value;
+        const author = document.getElementById('author').value;
+        const publisher = document.getElementById('publisher').value;
+        const newSach = { isbn, title, author, publisher };
+        const token = '{{token}}';
+        fetch('/api/book', {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `jwt ${token}`
+            },
+            body: JSON.stringify(newSach)
+        })
+            .then(response => {
+                if (response.ok) {
+                    console.log("Book added successfully!");
+                    location.href = "http://localhost:3000/book";
+                } else {
+                    console.error("Error adding book.");
+                }
+            })
+            .catch(err => console.error(err));
+    }
+
+</script>

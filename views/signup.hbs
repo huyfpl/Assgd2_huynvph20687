@@ -1,0 +1,19 @@
+{{>header}}
+
+<form method="post" action="/api/signup">
+  <h2>Sign up</h2>
+  {{#if msg}}
+  <div class="p-1 mb-2 bg-warning text-dark rounded">
+    <p class="fw-bold mx-3 mb-0">{{msg}}</p>
+  </div>
+  {{/if}}
+  <label for="username">username</label>
+  <input type="text" name="username" required>
+  <div class="username error"></div>
+  <label for="password">Password</label>
+  <input type="password" name="password" required>
+  <div class="password error"></div>
+  <button type="submit">Sign up</button>
+</form>
+
+{{> footer}}
