@@ -81,6 +81,10 @@ router.get("/", function (req, res, next) {
   }
 });
 
+router.get("/logout", (req, res) => {
+  res.clearCookie('jwt');
+  res.redirect('/');
+});
 
 
 
