@@ -89,6 +89,19 @@ router.get('/quanao', passport.authenticate('jwt', { session: false }), async fu
         return res.status(403).send({ success: false, msg: 'Unauthorized.' });
     }
 });
+// tìm quần áo 
+router.get('/search_quanao', passport.authenticate('jwt', { session: false }), async function (req, res) {
+    var token = getToken(req.headers);
+    if (token) {
+        let name = req.query.name; // extract the 'name' query parameter
+        let regex = new RegExp(name, 'i'); // create a case-insensitive regular expression
+        let quanaos = await quanao.find({ tenquanao: { $regex: regex } }); // filter quanao collection by name using the regular expression
+
+        return res.json(quanaos);
+    } else {
+        return res.status(403).send({ success: false, msg: 'Unauthorized.' });
+    }
+});
 
 
 router.post("/quanao", passport.authenticate("jwt", { session: false }), function (req, res) {

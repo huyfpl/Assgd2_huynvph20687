@@ -50,6 +50,27 @@ router.get('/add', async function (req, res) {
   const token = req.cookies.jwt;
   res.render("add", { Title: "Add", token })
 })
+router.get('/timquanao', async function (req, res) {
+  const token = req.cookies.jwt;
+
+  try {
+    const query = req.query.query;
+    const response = await axios.get(`http://localhost:3000/api/search_quanao?name=${query}`, {
+      headers: { Authorization: `jwt ${token}` },
+    });
+    const data = response.data;
+    res.render("quanao", {
+      Title: "quanao",
+      data: data,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+
+
+
 router.get("/", function (req, res, next) {
   const token = req.cookies.jwt;
   console.log("huy token",token)

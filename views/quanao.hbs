@@ -1,35 +1,46 @@
-<div class="container-fluid">
-    <a href="/add" class="btn btn-warning w-100">Thêm sách</a>
-    
-    <table class="table table-bordered table-hover">
-    <thead class="thead-dark">
-        <tr style="text-align: center;">
-            <th style="width: 10px;"># stt</th>
-            <th style="width: 150px;">Tên quần áo</th>
-            <th style="width: 100px;">Số lượng</th>
-            <th style="width: 100px;">Giá</th>
-            <th style="width: 200px;">Hình ảnh</th>
-            <th style="width: 120px;">Hành động</th>
-        </tr>
-    </thead>
-    <tbody>
-        {{#each data}}
-        <tr>
-            <td>{{sum @index 1}}</td>
-            <td>{{this.tenquanao}}</td>
-            <td>{{this.soluong}}</td>
-            <td>{{this.price}}</td>
-            <td><img src="{{this.image}}" style="max-height: 100px;"></td>
-            <td style="text-align: center;">
-                <a href="/edit/{{this._id}}" class="btn btn-sm btn-warning">Sửa</a>
-                <form method="POST" action="/delete/{{this._id}}" style="display: inline;">
-                    <button type="submit" class="btn btn-sm btn-danger">Xóa</button>
-                </form>
-            </td>
-        </tr>
-        {{/each}}
+<div class="container-fluid " style="text-align: center;">
+    <a href="/">
+     <img src="/back.png" style="width: 50px; float: left; margin: 5px; cursor: pointer;">
+    </a>
+   
+    <a href="/add" class="btn btn-info w-48" style="margin: 10px; margin-left: -50px;">Thêm sách</a>
+    <form action="/timquanao" method="GET" class="d-flex justify-content-center" style="margin: 20px auto;">
+        <div class="form-group w-45" >
+            <input type="text" name="query" class="form-control border-success" placeholder="Tìm kiếm theo tên...">
+        </div>
+        <button type="submit" class="btn btn-primary " style="margin-left: 10px;">Tìm kiếm</button>
+    </form>
 
-    </tbody>
-</table>
+
+    <table class="table table-bordered table-hover border-primary">
+        <thead class="thead-dark border-primary " style="background-color: aqua;">
+            <tr style="text-align: center;">
+                <th style="width: 10px;"># stt</th>
+                <th style="width: 150px;">Tên quần áo</th>
+                <th style="width: 100px;">Số lượng</th>
+                <th style="width: 100px;">Giá</th>
+                <th style="width: 200px;">Hình ảnh</th>
+                <th style="width: 120px;">Hành động</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each data}}
+            <tr>
+                <td>{{sum @index 1}}</td>
+                <td>{{this.tenquanao}}</td>
+                <td class="font-weight-bold">{{this.soluong}}</td>
+                <td>{{this.price}}</td>
+                <td><img src="{{this.image}}" style="max-height: 100px;" alt="hình ảnh chưa hiển thị!"></td>
+                <td style="text-align: center;">
+                    <a href="/edit/{{this._id}}" class="btn btn-sm btn-success">Sửa</a>
+                    <form method="POST" action="/delete/{{this._id}}" style="display: inline;">
+                        <button type="submit" class="btn btn-sm btn-danger">Xóa</button>
+                    </form>
+                </td>
+            </tr>
+            {{/each}}
+
+        </tbody>
+    </table>
 
 </div>
