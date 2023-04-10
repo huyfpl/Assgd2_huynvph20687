@@ -21,7 +21,8 @@ var UserSchema = new Schema({
         required: true
     },
 capquyen: {
-        type: Boolean
+        type: Boolean,
+        default: false
       }
 });
 

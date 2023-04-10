@@ -420,6 +420,20 @@ router.post('/profile/:id', async function(req, res) {
     res.sendStatus(500);
   }
 });
+router.post('/capquyen/:id', async function(req, res) {
+  const userId = req.params.id;
+
+  try {
+    console.log('Id: ' + userId);
+    console.log(req.body);
+     const quanaos = await user.findByIdAndUpdate({_id:userId}, { capquyen: true });
+     console.log("cạp nhật user",quanaos )
+    res.redirect('/user')
+  } catch (error) {
+    console.log(error);
+    res.sendStatus(500);
+  }
+});
 
 
 

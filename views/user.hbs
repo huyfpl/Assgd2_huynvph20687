@@ -27,7 +27,11 @@
                 <td class="font-weight-bold"><img src="{{this.anhdaidien}}" style="max-height: 100px;" alt="hình ảnh chưa hiển thị!"></td>
                 <td style="text-align: center;">{{this.username}}</td>
                 <td style="text-align: center;">
-                    <a href="/edit/{{this._id}}" class="btn btn-sm btn-success">Cấp quyền </a>
+
+                    <form method="post" action="/capquyen/{{this._id}}">
+                    <button class="btn btn-sm btn-success">Cấp quyền </button>
+                    </form>
+                   
                     <form method="get" action="/xoauser/{{this._id}}" style="display: inline;">
                         <button type="submit" class="btn btn-sm btn-danger">Xóa</button>
                     </form>
