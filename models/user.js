@@ -5,12 +5,10 @@ var bcrypt = require('bcrypt-nodejs');
 var UserSchema = new Schema({
     hovaten: {
         type: String,
-        unique: true,
         required: true
     },
     anhdaidien:{
         type: String,
-        unique: true,
         required: true
     },
   username: {
@@ -23,8 +21,7 @@ var UserSchema = new Schema({
         required: true
     },
 capquyen: {
-        type: Boolean,
-        default: true
+        type: Boolean
       }
 });
 

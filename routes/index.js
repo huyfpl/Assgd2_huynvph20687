@@ -85,7 +85,54 @@ router.get("/quanao/admin", (req, res, next) => {
   
   try {
     let userObj = await user.findById(req.decodedToken._id); // truy cập biến decodedToken từ đối tượng req
-    res.locals.user = { uyquyen: userObj.uyquyen }; // lưu trữ giá trị của uyquyen trong đối tượng res.locals
+   
+    const [userResponse, quanaoResponse] = await Promise.all([
+      axios.get("http://localhost:3000/api/user", {
+        headers: { Authorization: `jwt ${token}` },
+      }),
+      axios.get("http://localhost:3000/api/quanao", {
+        headers: { Authorization: `jwt ${token}` },
+      }),
+    ]);
+    const data = quanaoResponse.data;
+   
+    res.render("quanlyquanaoadmin", {
+      Title: "quanlyquanaoadmin",
+      data: data,
+     
+    });
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+
+router.get("/quanao/quyenuser", (req, res, next) => {
+  const token = req.cookies.jwt;
+  console.log(`jwt ${token}`);
+  console.log("huy token :" + token)
+  if (token) {
+    jwt.verify(token, config.secret, (err, decodedToken) => {
+      console.log(typeof jwt);
+      if (err) {
+        console.log("lỗi", err.message);
+        res.redirect('api/signin');
+      } else {
+        console.log(decodedToken);
+        req.decodedToken = decodedToken;
+        next();
+      }
+    });
+  } else {
+    res.redirect('/api/signin');
+  }
+}, async function (req, res) {
+  console.log("chạy vô đây nè")
+  const token = req.cookies.jwt;
+  
+  try {
+    let userObj = await user.findById(req.decodedToken._id); // truy cập biến decodedToken từ đối tượng req
+    res.locals.user = { cap: userObj.uyquyen }; // lưu trữ giá trị của uyquyen trong đối tượng res.locals
     const [userResponse, quanaoResponse] = await Promise.all([
       axios.get("http://localhost:3000/api/user", {
         headers: { Authorization: `jwt ${token}` },
@@ -106,6 +153,8 @@ router.get("/quanao/admin", (req, res, next) => {
     console.log(error);
   }
 });
+
+
 /// user
 router.get("/user", (req, res, next) => {
   const token = req.cookies.jwt;
@@ -209,7 +258,7 @@ router.get('/xoaquanao/:id', async function (req, res) {
     console.log(" xóa data");
     const data = response.data;
     console.log(" xóa data",data);
-    res.redirect("/quanao");
+    res.redirect("/quanao/admin");
   } catch (error) {
     console.log("lỗi xóa huy", error);
   }
@@ -371,6 +420,7 @@ router.post('/profile/:id', async function(req, res) {
     res.sendStatus(500);
   }
 });
+
 
 
 
