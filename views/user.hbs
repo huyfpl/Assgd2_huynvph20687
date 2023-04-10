@@ -1,0 +1,54 @@
+<div class="container-fluid" style="text-align: center; text-align: center;">
+    <a href="/admin">
+        <img src="/back.png" style="width: 50px; float: left; margin: 5px; cursor: pointer;">
+    </a>
+    <form action="/timuser" method="GET" class="d-flex justify-content-center" style="margin: 20px auto;">
+        <div class="form-group w-45">
+            <input type="text" name="query" class="form-control border-success" placeholder="Tìm kiếm theo tên...">
+        </div>
+        <button type="submit" class="btn btn-primary " style="margin-left: 10px;">Tìm kiếm</button>
+    </form>
+
+    <table class="table table-bordered table-hover border-primary" style="width: 60%; ">
+        <thead class="thead-dark border-primary" style="background-color: aqua;">
+            <tr style="text-align: center;">
+                <th style="width: 10%;">STT</th>
+                <th style="width: 20%;">Họ và Tên</th>
+                <th style="width: 20%;">Ảnh đại diện</th>
+                <th style="width: 25%;">Tên đăng nhập</th>
+                <th style="width: 25%;">Hành động</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each data}}
+            <tr>
+                <td style="text-align: center;">{{sum @index 1}}</td>
+                <td>{{this.hovaten}}</td>
+                <td class="font-weight-bold"><img src="{{this.anhdaidien}}" style="max-height: 100px;" alt="hình ảnh chưa hiển thị!"></td>
+                <td style="text-align: center;">{{this.username}}</td>
+                <td style="text-align: center;">
+                    <a href="/edit/{{this._id}}" class="btn btn-sm btn-success">Cấp quyền </a>
+                    <form method="get" action="/xoauser/{{this._id}}" style="display: inline;">
+                        <button type="submit" class="btn btn-sm btn-danger">Xóa</button>
+                    </form>
+                </td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</div>
+<style>
+    td {
+  vertical-align: middle;
+}
+.container-fluid {
+  
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+table {
+  margin: 0 auto;
+}
+
+</style>

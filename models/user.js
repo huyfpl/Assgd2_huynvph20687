@@ -21,7 +21,11 @@ var UserSchema = new Schema({
   password: {
         type: String,
         required: true
-    }
+    },
+capquyen: {
+        type: Boolean,
+        default: true
+      }
 });
 
 UserSchema.pre('save', function (next) {

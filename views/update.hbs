@@ -2,57 +2,29 @@
     <a href="/quanao" class="btn btn-danger m-3">Back</a>
     <div class="row d-flex justify-content-center">
         <div class="col-md-4 ">
-            <form>
+            <form id="update-form" action="/quanao/{{object._id}}" method="post">
+            <input type="text" name="id" value="{{object._id}}">
+
                 <div class="mb-3 form-group">
                     <label for="tenquanao" class="fw-bold">Tên Quần Áo</label>
                     <input type="text" class="form-control" name="tenquanao" id="tenquanao" required
-                        value="{{tenquanao}}">
+                        value="{{object.tenquanao}}">
                 </div>
                 <div class="mb-3 form-group">
                     <label for="soluong" class="fw-bold">Số Lượng</label>
-                    <input type="text" class="form-control" name="soluong" id="soluong" required value="{{soluong}}">
+                    <input type="text" class="form-control" name="soluong" id="soluong" required value="{{object.soluong}}">
                 </div>
                 <div class="mb-3 form-group">
                     <label for="price" class="fw-bold">Giá</label>
-                    <input type="number" class="form-control" name="price" id="price" required value="{{price}}">
+                    <input type="number" class="form-control" name="price" id="price" required value="{{object.price}}">
                 </div>
                 <div class="mb-3 form-group">
                     <label for="image" class="fw-bold">Link Hình Ảnh</label>
-                    <input type="text" class="form-control" name="image" id="image" required value="{{image}}">
+                    <input type="text" class="form-control" name="image" id="image" required value="{{object.image}}">
                 </div>
-                <button class="btn btn-info w-100" onclick="Update(event)">Sửa</button>
+                <button class="btn btn-info w-100" type="submit">Sửa</button>
+      
             </form>
         </div>
     </div>
 </div>
-
-<script>
-   function Update(event) {
-    event.preventDefault();
-    const tenquanao = document.getElementById("tenquanao").value;
-    const soluong = document.getElementById('soluong').value;
-    const price = document.getElementById('price').value;
-    const image = document.getElementById('image').value;
-    const newquanao = { tenquanao, soluong, price, image };
-    alert(newquanao)
-    const token = '{{token}}';
-    fetch('/api/quanao', {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-            "Authorization": `jwt ${token}`
-        },
-        body: JSON.stringify(newquanao)
-    })
-        .then(response => {
-            if (response.ok) {
-                console.log("quanao added successfully!");
-                location.href = "http://localhost:3000/quanao";
-            } else {
-                console.error("Error adding quanao.");
-            }
-        })
-        .catch(err => console.error(err));
-}
-
-</script>

@@ -34,7 +34,6 @@
     const price = document.getElementById('price').value;
     const image = document.getElementById('image').value;
     const newquanao = { tenquanao, soluong, price, image };
-    alert(newquanao)
     const token = '{{token}}';
     fetch('/api/quanao', {
         method: "POST",

@@ -3,6 +3,16 @@ var Schema = mongoose.Schema;
 var bcrypt = require('bcrypt-nodejs');
 
 var UserSchema = new Schema({
+    hovaten: {
+        type: String,
+        unique: true,
+        required: true
+    },
+    anhdaidien:{
+        type: String,
+        unique: true,
+        required: true
+    },
   username: {
         type: String,
         unique: true,
@@ -11,21 +21,21 @@ var UserSchema = new Schema({
   password: {
         type: String,
         required: true
-    }
+    },
 });
 
 UserSchema.pre('save', function (next) {
-    var user = this;
+    var admin = this;
     if (this.isModified('password') || this.isNew) {
         bcrypt.genSalt(10, function (err, salt) {
             if (err) {
                 return next(err);
             }
-            bcrypt.hash(user.password, salt, null, function (err, hash) {
+            bcrypt.hash(admin.password, salt, null, function (err, hash) {
                 if (err) {
                     return next(err);
                 }
-                user.password = hash;
+                admin.password = hash;
                 next();
             });
         });
@@ -43,4 +53,4 @@ UserSchema.methods.comparePassword = function (passw, cb) {
     });
 };
 
-module.exports = mongoose.model('User', UserSchema);
+module.exports = mongoose.model('Admin', UserSchema);

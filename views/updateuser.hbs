@@ -1,0 +1,22 @@
+<div class="container-fluid">
+    <a href="/" class="btn btn-danger m-3">Back</a>
+    <div class="row d-flex justify-content-center">
+        <div class="col-md-4 ">
+            <form id="update-form" action="/profile/{{object._id}}" method="post">
+            <input type="text" name="id" value="{{object._id}}">
+
+                <div class="mb-3 form-group">
+                    <label for="tenquanao" class="fw-bold">Họ và tên</label>
+                    <input type="text" class="form-control" name="tenquanao" id="tenquanao" required
+                        value="{{object.hovaten}}">
+                </div>
+                <div class="mb-3 form-group">
+                    <label for="soluong" class="fw-bold">Link ảnh</label>
+                    <input type="text" class="form-control" name="soluong" id="soluong" required value="{{object.anhdaidien}}">
+                </div>
+                <button class="btn btn-info w-100" type="submit">Sửa</button>
+      
+            </form>
+        </div>
+    </div>
+</div>
